@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">FilmesAdatbazis</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="new_shopping_item">New Movie</string>
+    <string name="title">Title</string>
+    <string name="opinion">Opinion</string>
+    <string name="new_movie">New Movie</string>
+    <string name="genre">Genre</string>
+    <string name="point">Point</string>
+    <string name="pointPrompt">Point 1-10</string>
+    <string name="new_own_list">New List</string>
+    <string name="list_description">List Description</string>
+    <string name="list_name">Name of new List</string>
+
+    <string name="horror">Horror</string>
+    <string name="thriller">Thriller</string>
+    <string name="comedy">Comedy</string>
+    <string name="action">Action</string>
+    <string name="drama">Drama</string>
+    <string name="scifi">Scifi</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="musical">Musical</string>
+
+    <string-array name="genre_items">
+        <item name="horror">Horror</item>
+        <item name="thriller">Thriller</item>
+        <item name="comedy">Comedy</item>
+        <item name="action">Action</item>
+        <item name="drama">Drama</item>
+        <item name="scifi">Scifi</item>
+        <item name="fantasy">Fantasy</item>
+        <item name="musical">Musical</item>
+    </string-array>
+
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title"/>
+
+    <EditText
+        android:id="@+id/MovieTitleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!--Pontozás ide jöjjön, legördülő lista, vagy ha ráérsz akkor csillagok...-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/point"/>
+
+    <!--<SeekBar
+        android:id="@+id/MoviePointSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="@integer/one"
+        android:max="@integer/ten"/>-->
+
+    <!--Legördülő pontozásdi 1-10-->
+    <Spinner
+        android:id="@+id/MoviePointSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+        <!--android:entries="@array/pointItems"-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dip"
+        android:text="@string/genre"/>
+
+    <Spinner
+        android:id="@+id/MovieGenreSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+
+    <!--Opinion text-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dip"
+        android:text="@string/opinion"/>
+
+    <EditText
+        android:id="@+id/MovieOpinionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="96dp" />
+
+
+</LinearLayout>

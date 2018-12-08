@@ -3,10 +3,8 @@ package hu.bme.aut.filmesadatbazis.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Entity(tableName = "movie")
 public class Movie {
@@ -15,29 +13,42 @@ public class Movie {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
-    @ColumnInfo(name = "name")
-    private String name;
+    @ColumnInfo(name = "title")
+    public String title;
 
     @ColumnInfo(name = "point")
-    private int point;
+    public int point;
 
     @ColumnInfo(name = "opinion")
-    private String opinion;
+    public String opinion;
 
     @ColumnInfo(name = "genre")
-    private Genre genre;
+    public Genre genre;
 
-    @ColumnInfo(name = "watchDate")
-    private Date watchDate;
+    /*public String getName() {
+        return name;
+    }
 
-    public Movie(long id, String name, int point, String opinion, Genre genre, Date watchDate) {
+    public int getPoint() {
+        return point;
+    }
+
+    public String getOpinion() {
+        return opinion;
+    }
+
+
+    /*@ColumnInfo(name = "watchDate")
+    private Date watchDate;*/
+
+   /* public Movie(long id, String title, int point, String opinion, Genre genre /*, Date watchDate) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.point = point;
         this.opinion = opinion;
         this.genre = genre;
-        this.watchDate = watchDate;
-    }
+        //this.watchDate = watchDate;
+    }*/
 
     public enum Genre {
         HORROR,
@@ -47,9 +58,27 @@ public class Movie {
         DRAMA,
         SCIFI,
         FANTASY,
-        MUSICAL
-    }
+        MUSICAL;
 
+        @TypeConverter
+        public static Genre getByOrdinal(int ordinal) {
+            Genre ret = null;
+            for (Genre gen : Genre.values()) {
+                if (gen.ordinal() == ordinal) {
+                    ret = gen;
+                    break;
+                }
+            }
+            return ret;
+        }
+
+        @TypeConverter
+        public static int toInt(Genre genre) {
+            return genre.ordinal();
+        }
+    }
 }
+
+
 
 
