@@ -110,12 +110,12 @@ public class UpdateMovieDialogFragment extends DialogFragment {
         //genreSpinner fill with genres
         addItemsOnGenreSpinner(contentView);
 
-        if (getArguments() != null) {
+       /* if (getArguments() != null) {
             titleEditText.setText(getArguments().getString("title",""));
             opinionEditText.setText(getArguments().getString("opinion",""));
             pointSpinner.setSelection(getArguments().getInt("point",1));
             genreSpinner.setSelection(getArguments().getInt("genre",1));
-        }
+        }*/
 
         return contentView;
     }
