@@ -65,7 +65,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                listener.onDataClicked(item); }
         });
         holder.item = item;
-
     }
 
     public @StringRes
@@ -111,11 +110,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public interface MovieClickListener {
         void onItemDeleted(Movie movie);
 
-        void onItemChanged(Movie movie);
-
         void onItemAddedToList(Movie movie, OwnList ownList);
 
         void onDataClicked(Movie movie);
+
+        void onMovieUpdated(Movie movie);
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {

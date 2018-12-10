@@ -78,7 +78,7 @@ public class DetailedListActivity extends AppCompatActivity
 
 
     @Override
-    public void onItemChanged(final Movie movie) {
+    public void onMovieUpdated(final Movie movie) {
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
@@ -106,8 +106,4 @@ public class DetailedListActivity extends AppCompatActivity
         new UpdateMovieDialogFragment().show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
     }
 
-    @Override
-    public void onMovieUpdated(Movie newMovie) {
-
-    }
 }

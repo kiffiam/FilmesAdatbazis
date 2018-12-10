@@ -42,17 +42,12 @@ public class UpdateMovieDialogFragment extends DialogFragment {
         } else {
             throw new RuntimeException("Activity must implement the NewMovieDialogListener interface!");
         }
-
     }
-
 
     //Dialogus megjelenítése
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-
-
         return new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.new_movie)
                 .setView(getContentView())
@@ -70,6 +65,7 @@ public class UpdateMovieDialogFragment extends DialogFragment {
     private Movie updateMovie() {
 
         Movie movie = new Movie();
+        movie.id = getArguments().getLong("id",0);
         movie.title = titleEditText.getText().toString();
         movie.opinion = opinionEditText.getText().toString();
         movie.point = Integer.parseInt(pointSpinner.getSelectedItem().toString());
@@ -84,8 +80,7 @@ public class UpdateMovieDialogFragment extends DialogFragment {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         pointSpinner.setAdapter(adapter);
-
-
+        pointSpinner.setSelection(getArguments().getInt("point",0)-1);
     }
 
     public void addItemsOnGenreSpinner(View contView){
@@ -93,7 +88,7 @@ public class UpdateMovieDialogFragment extends DialogFragment {
         genreSpinner.setAdapter(new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.genre_items)));
-
+        genreSpinner.setSelection(getArguments().getInt("genre",1));
     }
 
 
@@ -102,20 +97,15 @@ public class UpdateMovieDialogFragment extends DialogFragment {
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_new_movie, null);
 
         titleEditText = contentView.findViewById(R.id.MovieTitleEditText);
+        titleEditText.setText(getArguments().getString("title",""));
         opinionEditText = contentView.findViewById(R.id.MovieOpinionEditText);
+        opinionEditText.setText(getArguments().getString("opinion",""));
 
         //PointSpinner fill with integers 1-10
         addItemsOnPointSpinner(contentView);
 
         //genreSpinner fill with genres
         addItemsOnGenreSpinner(contentView);
-
-       /* if (getArguments() != null) {
-            titleEditText.setText(getArguments().getString("title",""));
-            opinionEditText.setText(getArguments().getString("opinion",""));
-            pointSpinner.setSelection(getArguments().getInt("point",1));
-            genreSpinner.setSelection(getArguments().getInt("genre",1));
-        }*/
 
         return contentView;
     }

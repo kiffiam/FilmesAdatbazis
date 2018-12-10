@@ -82,7 +82,7 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
     }
 
     @Override
-    public void onItemChanged(final Movie movie) {
+    public void onMovieUpdated(final Movie movie) {
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
@@ -93,6 +93,7 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
 
             @Override
             protected void onPostExecute(Boolean isSuccessful) {
+                loadItemsInBackground();
                 Log.d("AllMoviesActivity", "Movie updated");
             }
         }.execute();
@@ -100,36 +101,21 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
 
     @Override
     public void onItemAddedToList(final Movie movie, final OwnList ownList) {
-        /*new AsyncTask<Void, Void, Boolean>() {
 
-            @Override
-            protected Boolean doInBackground(Void... voids) {
-                dbContext.insertMovieToList(movie.id, ownList.id);
-                return true;
-            }
-
-            @Override
-            protected void onPostExecute(Boolean isSuccessful) {
-                Log.d("AllMoviesActivity", "Movie inserted into list");
-            }
-        }.execute();*/
     }
 
     @Override
     public void onDataClicked(Movie movie) {
         Bundle bundle = new Bundle();
+        bundle.putLong("id",movie.id);
         bundle.putString("title", movie.title);
         bundle.putString("opinion", movie.opinion);
         bundle.putInt("point", movie.point);
-        bundle.putInt("genre", adapter.getStringSource(movie.genre));
+        bundle.putInt("genre", Movie.Genre.toInt(movie.genre));
 
         UpdateMovieDialogFragment updateMovieDialogFragment = new UpdateMovieDialogFragment();
         updateMovieDialogFragment.setArguments(bundle);
         updateMovieDialogFragment.show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
     }
 
-    @Override
-    public void onMovieUpdated(Movie newMovie) {
-
-    }
 }
