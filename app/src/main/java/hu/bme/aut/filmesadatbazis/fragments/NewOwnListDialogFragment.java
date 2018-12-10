@@ -51,18 +51,33 @@ public class NewOwnListDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO implement list creation
+                        if (isValid()) {
+                        listener.onOwnListCreated(getOwnList());
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, null).create();
     }
 
+    private OwnList getOwnList() {
+        OwnList ownList = new OwnList();
+        ownList.name = nameEditText.getText().toString();
+        ownList.description = descriptionEditText.getText().toString();
+        return ownList;
+    }
+
     private View getContentView() {
         View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_new_list, null);
 
-        nameEditText = contentView.findViewById(R.id.MovieTitleEditText);
-        descriptionEditText = contentView.findViewById(R.id.MovieOpinionEditText);
+        nameEditText = contentView.findViewById(R.id.ListNameEditText);
+        descriptionEditText = contentView.findViewById(R.id.ListDescriptionEditText);
 
         return contentView;
+    }
+
+    private boolean isValid() {
+        return nameEditText.getText().length() > 0 &&
+                descriptionEditText.getText().length() > 0;
+
     }
 }

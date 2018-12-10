@@ -9,18 +9,18 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 @Dao
-public interface OwnListDao {
+public interface ListMovieJoinDao {
 
-    @Query("SELECT * FROM OwnList")
-    List<OwnList> getAll();
+    @Query("SELECT * FROM list_movie_join")
+    List<ListMovieJoin> getAll();
 
     @Insert
-    long insert(OwnList ownList);
+    long insert(long id, long idl);
 
     @Update
-    void update(OwnList ownList);
+    void update(ListMovieJoin listMovieJoin);
 
     @Delete
-    void delete(OwnList ownList);
+    void deleteItem(ListMovieJoin listMovieJoin);
 
 }

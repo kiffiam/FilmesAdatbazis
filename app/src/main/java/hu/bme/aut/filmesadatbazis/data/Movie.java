@@ -25,30 +25,8 @@ public class Movie {
     @ColumnInfo(name = "genre")
     public Genre genre;
 
-    /*public String getName() {
-        return name;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public String getOpinion() {
-        return opinion;
-    }
-
-
     /*@ColumnInfo(name = "watchDate")
     private Date watchDate;*/
-
-   /* public Movie(long id, String title, int point, String opinion, Genre genre /*, Date watchDate) {
-        this.id = id;
-        this.title = title;
-        this.point = point;
-        this.opinion = opinion;
-        this.genre = genre;
-        //this.watchDate = watchDate;
-    }*/
 
     public enum Genre {
         HORROR,

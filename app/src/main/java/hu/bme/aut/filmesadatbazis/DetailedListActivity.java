@@ -1,29 +1,22 @@
 package hu.bme.aut.filmesadatbazis;
 
-
-import android.arch.persistence.room.Room;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.PopupMenu;
 
 import java.util.List;
 
 import hu.bme.aut.filmesadatbazis.adapter.MovieAdapter;
 import hu.bme.aut.filmesadatbazis.data.DbContext;
 import hu.bme.aut.filmesadatbazis.data.Movie;
-import hu.bme.aut.filmesadatbazis.data.MovieDatabase;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
-import hu.bme.aut.filmesadatbazis.fragments.CreateMovieDialogFragment;
 import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
 
-public class AllMovieActivity extends AppCompatActivity
-implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
-
+public class DetailedListActivity extends AppCompatActivity
+        implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
 
@@ -47,8 +40,7 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
         recyclerView.setAdapter(adapter);
     }
 
-    //ez biztos kell ide mert betölteni csak akkor töltjük be ha
-    //ezt az activity-t megnyitjuk
+    //TODO:ne az összes filmet jelenítsók meg csak amiket kell
     private void loadItemsInBackground(){
         new AsyncTask<Void, Void, List<Movie>>(){
 
@@ -64,13 +56,15 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
         }.execute();
     }
 
+    //TODO:Csak a listáról tölrődjenek, tehát a joinból
     @Override
     public void onItemDeleted(final Movie movie) {
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                dbContext.deleteMovie(movie);
+                //dbContext.deleteMovie(movie);
+                //TODO:csak a joinból törölje
                 return true;
             }
 
@@ -80,6 +74,8 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
             }
         }.execute();
     }
+
+
 
     @Override
     public void onItemChanged(final Movie movie) {
@@ -99,33 +95,15 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
     }
 
     @Override
-    public void onItemAddedToList(final Movie movie, final OwnList ownList) {
-        /*new AsyncTask<Void, Void, Boolean>() {
+    public void onItemAddedToList(Movie movie, OwnList ownList) {
 
-            @Override
-            protected Boolean doInBackground(Void... voids) {
-                dbContext.insertMovieToList(movie.id, ownList.id);
-                return true;
-            }
-
-            @Override
-            protected void onPostExecute(Boolean isSuccessful) {
-                Log.d("AllMoviesActivity", "Movie inserted into list");
-            }
-        }.execute();*/
     }
 
     @Override
     public void onDataClicked(Movie movie) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", movie.title);
-        bundle.putString("opinion", movie.opinion);
-        bundle.putInt("point", movie.point);
-        bundle.putInt("genre", adapter.getStringSource(movie.genre));
 
-        UpdateMovieDialogFragment updateMovieDialogFragment = new UpdateMovieDialogFragment();
-        updateMovieDialogFragment.setArguments(bundle);
-        updateMovieDialogFragment.show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
+        new UpdateMovieDialogFragment().show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
     }
 
     @Override

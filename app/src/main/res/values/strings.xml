@@ -21,6 +21,7 @@
     <string name="scifi">Scifi</string>
     <string name="fantasy">Fantasy</string>
     <string name="musical">Musical</string>
+    <string name="description">Description:</string>
 
     <string-array name="genre_items">
         <item name="horror">Horror</item>
