@@ -60,9 +60,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.genreTextView.setText(getStringSource(item.genre));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               listener.onDataClicked(item); }
+            @Override
+            public void onClick(View v) {
+                listener.onDataClicked(item); }
         });
         holder.item = item;
     }
@@ -110,11 +110,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public interface MovieClickListener {
         void onItemDeleted(Movie movie);
 
-        void onItemAddedToList(Movie movie, OwnList ownList);
+        void onMovieInsertToList(Movie movie, OwnList ownList);
 
         void onDataClicked(Movie movie);
-
-        void onMovieUpdated(Movie movie);
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -170,9 +168,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     private void addItemToList(int layoutPosition, OwnList ownList) {
-    Movie movieToAdd = movies.get(layoutPosition);
+        Movie movieToAdd = movies.get(layoutPosition);
 
-    listener.onItemAddedToList(movieToAdd, ownList);
+        listener.onMovieInsertToList(movieToAdd, ownList);
     }
 
     public void update(List<Movie> movieList) {

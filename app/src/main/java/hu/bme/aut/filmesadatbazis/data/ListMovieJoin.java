@@ -19,4 +19,9 @@ public class ListMovieJoin {
 
     @ColumnInfo(name = "ownListId")
     public long ownListId;
+
+    public ListMovieJoin(long movieId, long ownListId) {
+        this.movieId = movieId;
+        this.ownListId = ownListId;
+    }
 }

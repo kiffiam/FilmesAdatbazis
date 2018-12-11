@@ -28,6 +28,17 @@ public class Movie {
     /*@ColumnInfo(name = "watchDate")
     private Date watchDate;*/
 
+    public Movie(String title, int point, String opinion, Genre genre) {
+        this.title = title;
+        this.point = point;
+        this.opinion = opinion;
+        this.genre = genre;
+    }
+
+    public Movie(){
+
+    }
+
     public enum Genre {
         HORROR,
         THRILLER,

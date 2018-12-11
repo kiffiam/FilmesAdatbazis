@@ -10,14 +10,15 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import hu.bme.aut.filmesadatbazis.data.DbContext;
+import hu.bme.aut.filmesadatbazis.data.ListMovieJoin;
 import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 import hu.bme.aut.filmesadatbazis.fragments.CreateMovieDialogFragment;
-import hu.bme.aut.filmesadatbazis.fragments.NewOwnListDialogFragment;
+import hu.bme.aut.filmesadatbazis.fragments.CreateOwnListDialogFragment;
 
 public class MainActivity extends AppCompatActivity
         implements CreateMovieDialogFragment.NewMovieDialogListener,
-        NewOwnListDialogFragment.NewOwnListDialogListener{
+        CreateOwnListDialogFragment.NewOwnListDialogListener{
 
     private DbContext dbContext;
 
@@ -29,6 +30,14 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         dbContext = new DbContext(getApplicationContext());
+
+        dbContext.insertMovie(new Movie("becstelen",5,"jofele", Movie.Genre.ACTION));
+        dbContext.insertMovie(new Movie("starwars",6,"kek", Movie.Genre.SCIFI));
+
+        dbContext.insertOwnList(new OwnList("ize","filmek"));
+
+        dbContext.insertListMovieJoin(new ListMovieJoin(0,0));
+        dbContext.insertListMovieJoin(new ListMovieJoin(0,1));
 
         //New movie button pops up a dialogfragment
         ImageButton btnNewMovieDialog = findViewById(R.id.btnNewMovie);
@@ -44,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         btnNewOwnListDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new NewOwnListDialogFragment().show(getSupportFragmentManager(), NewOwnListDialogFragment.TAG);
+                new CreateOwnListDialogFragment().show(getSupportFragmentManager(), CreateOwnListDialogFragment.TAG);
             }
         });
 
@@ -109,3 +118,4 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+

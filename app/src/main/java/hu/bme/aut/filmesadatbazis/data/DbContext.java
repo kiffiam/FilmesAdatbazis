@@ -43,7 +43,16 @@ public class DbContext {
         database.ownListDao().delete(ownList);
     }
 
-    /*public void insertMovieToList(long id, long id1) {
-        database.ownListMovieJoinDao().insert(id,idl);
-    }*/
+    public void updateOwnList(OwnList ownList) { database.ownListDao().update(ownList);
+    }
+
+
+    //listMovieJoinDao.insert(new ListMovieJoin(movieId, ownListId);
+    public void insertListMovieJoin(ListMovieJoin listMovieJoin){
+        database.listMovieJoinDao().insert(listMovieJoin);
+    }
+
+    public List<Movie> getMoviesForList(final long ownListId){
+        return database.listMovieJoinDao().getMoviesForList(ownListId);
+    }
 }

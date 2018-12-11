@@ -101,7 +101,7 @@ public class CreateMovieDialogFragment extends DialogFragment {
 
     private boolean isValid() {
         return titleEditText.getText().length() > 0 &&
-        opinionEditText.getText().length() > 0;
+                opinionEditText.getText().length() > 0;
 
     }
 

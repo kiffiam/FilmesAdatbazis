@@ -4,24 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
     android:paddingLeft="16dp"
+    android:paddingTop="8dp"
     android:paddingRight="16dp"
-    android:paddingTop="8dp">
+    android:paddingBottom="8dp">
 
     <TextView
-            android:id="@+id/OwnListItemNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             />
+        android:id="@+id/OwnListItemNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="23sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
 
         <ImageButton
-        android:id="@+id/OwnListItemRemoveButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
-        android:src="@drawable/baseline_delete_black_48" />
+            android:id="@+id/OwnListItemMoviesButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/baseline_theaters_black_48" />
 
+        <ImageButton
+            android:id="@+id/OwnListItemRemoveButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/baseline_delete_black_48" />
     </LinearLayout>
+</LinearLayout>

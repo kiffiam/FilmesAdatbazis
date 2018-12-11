@@ -15,6 +15,7 @@ import java.util.List;
 
 import hu.bme.aut.filmesadatbazis.adapter.MovieAdapter;
 import hu.bme.aut.filmesadatbazis.data.DbContext;
+import hu.bme.aut.filmesadatbazis.data.ListMovieJoin;
 import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.MovieDatabase;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
@@ -22,7 +23,7 @@ import hu.bme.aut.filmesadatbazis.fragments.CreateMovieDialogFragment;
 import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
 
 public class AllMovieActivity extends AppCompatActivity
-implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
+        implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
 
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
@@ -100,8 +101,21 @@ implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovi
     }
 
     @Override
-    public void onItemAddedToList(final Movie movie, final OwnList ownList) {
+    public void onMovieInsertToList(final Movie movie, final OwnList ownList) {
+        new AsyncTask<Void, Void, Boolean>() {
 
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                dbContext.insertListMovieJoin(new ListMovieJoin(movie.id,ownList.id));
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean isSuccessful) {
+                loadItemsInBackground();
+                Log.d("AllMoviesActivity", "Movie updated");
+            }
+        }.execute();
     }
 
     @Override

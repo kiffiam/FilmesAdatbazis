@@ -17,6 +17,7 @@ import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
 
 public class DetailedListActivity extends AppCompatActivity
         implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
+
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
 
@@ -35,18 +36,20 @@ public class DetailedListActivity extends AppCompatActivity
     private void initRecyclerView(){
         recyclerView = findViewById(R.id.AllMovieRecyclerView);
         adapter = new MovieAdapter(this);
-        loadItemsInBackground();
+        //loadItemsInBackground(ownList);
+        loadItemsInBackground(0);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
     //TODO:ne az összes filmet jelenítsók meg csak amiket kell
-    private void loadItemsInBackground(){
+    private void loadItemsInBackground(final long id){
         new AsyncTask<Void, Void, List<Movie>>(){
 
             @Override
             protected List<Movie> doInBackground(Void... voids){
-                return dbContext.getMovies();
+                //return dbContext.getMoviesForList(ownList.id);
+                return dbContext.getMoviesForList(id);
             }
 
             @Override
@@ -63,18 +66,21 @@ public class DetailedListActivity extends AppCompatActivity
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                //dbContext.deleteMovie(movie);
-                //TODO:csak a joinból törölje
+                //delete
                 return true;
             }
 
             @Override
             protected void onPostExecute(Boolean isSuccessful) {
-                Log.d("AllMoviesActivity", "Movie deleted");
+                Log.d("AllMoviesActivity", "Movie deleted from list");
             }
         }.execute();
     }
 
+    @Override
+    public void onMovieInsertToList(Movie movie, OwnList ownList) {
+
+    }
 
 
     @Override
@@ -95,15 +101,17 @@ public class DetailedListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemAddedToList(Movie movie, OwnList ownList) {
-
-    }
-
-    @Override
     public void onDataClicked(Movie movie) {
         Bundle bundle = new Bundle();
+        bundle.putLong("id",movie.id);
+        bundle.putString("title", movie.title);
+        bundle.putString("opinion", movie.opinion);
+        bundle.putInt("point", movie.point);
+        bundle.putInt("genre", Movie.Genre.toInt(movie.genre));
 
-        new UpdateMovieDialogFragment().show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
+        UpdateMovieDialogFragment updateMovieDialogFragment = new UpdateMovieDialogFragment();
+        updateMovieDialogFragment.setArguments(bundle);
+        updateMovieDialogFragment.show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
     }
 
 }

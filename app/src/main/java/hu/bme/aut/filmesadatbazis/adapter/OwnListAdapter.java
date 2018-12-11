@@ -29,6 +29,11 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
         ownLists = new ArrayList<>();
     }
 
+    public interface OwnListClickListener{
+        void onDataClicked(OwnList ownList);
+        void onItemDeleted(OwnList ownList);
+    }
+
     @NonNull
     @Override
     public OwnListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -38,13 +43,13 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
 
     @Override
     public void onBindViewHolder(@NonNull OwnListViewHolder holder, int position) {
-        OwnList item = ownLists.get(position);
+        final OwnList item = ownLists.get(position);
         holder.nameTextView.setText(item.name);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onDataClicked(); }
+                listener.onDataClicked(item); }
         });
 
         holder.item=item;
@@ -55,15 +60,11 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
         return ownLists.size();
     }
 
-    public interface OwnListClickListener{
-        void onDataClicked();
-        void onItemDeleted(OwnList ownList);
-    }
-
     class OwnListViewHolder extends RecyclerView.ViewHolder{
 
         TextView nameTextView;
         ImageButton removeButton;
+        ImageButton moviesButton;
 
         OwnList item;
 
@@ -72,6 +73,9 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
 
             nameTextView = itemView.findViewById(R.id.OwnListItemNameTextView);
             removeButton = itemView.findViewById(R.id.OwnListItemRemoveButton);
+            moviesButton = itemView.findViewById(R.id.OwnListItemMoviesButton);
+
+            //TODO:FILMLISTA BUTTON
 
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,6 +83,8 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
                     deleteItem(getLayoutPosition());
                 }
             });
+
+
 
 
         }
