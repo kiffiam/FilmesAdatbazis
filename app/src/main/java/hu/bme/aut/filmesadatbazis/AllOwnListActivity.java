@@ -18,7 +18,6 @@ import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.MovieDatabase;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
-import hu.bme.aut.filmesadatbazis.fragments.UpdateOwnListDialogFragment;
 
 public class AllOwnListActivity extends AppCompatActivity implements OwnListAdapter.OwnListClickListener {
 
@@ -64,18 +63,10 @@ public class AllOwnListActivity extends AppCompatActivity implements OwnListAdap
     }
 
 
-    //legyen ez a szerkesztés, és külön gomb a listában található filmek
     @Override
-    public void onDataClicked(OwnList ownList) {
-        Bundle bundle = new Bundle();
-        bundle.putLong("id",ownList.id);
-        bundle.putString("name", ownList.name);
-        bundle.putString("description", ownList.description);
-
-
-        UpdateOwnListDialogFragment updateOwnListDialogFragment = new UpdateOwnListDialogFragment();
-        updateOwnListDialogFragment.setArguments(bundle);
-        updateOwnListDialogFragment.show(getSupportFragmentManager(), UpdateOwnListDialogFragment.TAG);
+    public void onDataClicked() {
+        Intent intent = new Intent(AllOwnListActivity.this, DetailedListActivity.class);
+        startActivity(intent);
     }
 
     @Override
