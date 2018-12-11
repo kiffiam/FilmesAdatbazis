@@ -95,6 +95,13 @@ public class AllOwnListActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onOpenList(OwnList ownList) {
+        Intent intent = new Intent(AllOwnListActivity.this, DetailedListActivity.class);
+        intent.putExtra("ownListId",ownList.id);
+        startActivity(intent);
+    }
+
+    @Override
     public void onOwnListUpdated(final OwnList ownList) {
         new AsyncTask<Void, Void, Boolean>() {
 

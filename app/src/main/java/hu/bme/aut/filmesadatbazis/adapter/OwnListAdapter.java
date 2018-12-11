@@ -14,7 +14,10 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.bme.aut.filmesadatbazis.AllMovieActivity;
 import hu.bme.aut.filmesadatbazis.AllOwnListActivity;
+import hu.bme.aut.filmesadatbazis.DetailedListActivity;
+import hu.bme.aut.filmesadatbazis.MainActivity;
 import hu.bme.aut.filmesadatbazis.R;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 
@@ -32,6 +35,7 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
     public interface OwnListClickListener{
         void onDataClicked(OwnList ownList);
         void onItemDeleted(OwnList ownList);
+        void onOpenList(OwnList ownList);
     }
 
     @NonNull
@@ -75,18 +79,18 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
             removeButton = itemView.findViewById(R.id.OwnListItemRemoveButton);
             moviesButton = itemView.findViewById(R.id.OwnListItemMoviesButton);
 
-            //TODO:FILMLISTA BUTTON
-
+            moviesButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    openList(getLayoutPosition());
+                }
+            });
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     deleteItem(getLayoutPosition());
                 }
             });
-
-
-
-
         }
     }
 
@@ -100,5 +104,10 @@ public class OwnListAdapter extends RecyclerView.Adapter<OwnListAdapter.OwnListV
         OwnList toRemove = ownLists.remove(position);
         notifyItemRemoved(position);
         listener.onItemDeleted(toRemove);
+    }
+
+    public void openList(int position){
+        OwnList toOpen = ownLists.get(position);
+        listener.onOpenList(toOpen);
     }
 }

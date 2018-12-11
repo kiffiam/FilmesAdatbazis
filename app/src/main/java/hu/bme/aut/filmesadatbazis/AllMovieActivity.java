@@ -8,22 +8,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.PopupMenu;
 
 import java.util.List;
 
 import hu.bme.aut.filmesadatbazis.adapter.MovieAdapter;
+import hu.bme.aut.filmesadatbazis.adapter.OwnListAdapter;
 import hu.bme.aut.filmesadatbazis.data.DbContext;
 import hu.bme.aut.filmesadatbazis.data.ListMovieJoin;
 import hu.bme.aut.filmesadatbazis.data.Movie;
-import hu.bme.aut.filmesadatbazis.data.MovieDatabase;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
-import hu.bme.aut.filmesadatbazis.fragments.CreateMovieDialogFragment;
 import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
 
 public class AllMovieActivity extends AppCompatActivity
-        implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener{
+        implements MovieAdapter.MovieClickListener, UpdateMovieDialogFragment.UpdateMovieDialogListener, OwnListAdapter.OwnListClickListener {
 
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
@@ -44,12 +41,28 @@ public class AllMovieActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.AllMovieRecyclerView);
         adapter = new MovieAdapter(this);
         loadItemsInBackground();
+        loadItemsInBackgroundLists();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
     }
 
-    //ez biztos kell ide mert betölteni csak akkor töltjük be ha
-    //ezt az activity-t megnyitjuk
+    private void loadItemsInBackgroundLists(){
+        new AsyncTask<Void, Void, List<OwnList>>(){
+
+            @Override
+            protected List<OwnList> doInBackground(Void... voids){
+                return dbContext.getOwnLists();
+            }
+
+            @Override
+            protected void onPostExecute(List<OwnList> ownLists) {
+                adapter.updateLists(ownLists);
+                Log.d("AllMoviesActivity", "LISTS LOADED !!!!!!!!!!!!!!!!");
+            }
+        }.execute();
+    }
+
     private void loadItemsInBackground(){
         new AsyncTask<Void, Void, List<Movie>>(){
 
@@ -113,7 +126,7 @@ public class AllMovieActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(Boolean isSuccessful) {
                 loadItemsInBackground();
-                Log.d("AllMoviesActivity", "Movie updated");
+                Log.d("AllMoviesActivity", "Movie added to List");
             }
         }.execute();
     }
@@ -132,4 +145,19 @@ public class AllMovieActivity extends AppCompatActivity
         updateMovieDialogFragment.show(getSupportFragmentManager(), UpdateMovieDialogFragment.TAG);
     }
 
+
+    @Override
+    public void onDataClicked(OwnList ownList) {
+
+    }
+
+    @Override
+    public void onItemDeleted(OwnList ownList) {
+
+    }
+
+    @Override
+    public void onOpenList(OwnList ownList) {
+
+    }
 }

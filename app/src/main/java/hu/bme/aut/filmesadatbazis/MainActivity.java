@@ -31,13 +31,6 @@ public class MainActivity extends AppCompatActivity
 
         dbContext = new DbContext(getApplicationContext());
 
-        dbContext.insertMovie(new Movie("becstelen",5,"jofele", Movie.Genre.ACTION));
-        dbContext.insertMovie(new Movie("starwars",6,"kek", Movie.Genre.SCIFI));
-
-        dbContext.insertOwnList(new OwnList("ize","filmek"));
-
-        dbContext.insertListMovieJoin(new ListMovieJoin(0,0));
-        dbContext.insertListMovieJoin(new ListMovieJoin(0,1));
 
         //New movie button pops up a dialogfragment
         ImageButton btnNewMovieDialog = findViewById(R.id.btnNewMovie);

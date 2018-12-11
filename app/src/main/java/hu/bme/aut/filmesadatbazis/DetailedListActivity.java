@@ -37,7 +37,7 @@ public class DetailedListActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.AllMovieRecyclerView);
         adapter = new MovieAdapter(this);
         //loadItemsInBackground(ownList);
-        loadItemsInBackground(0);
+        loadItemsInBackground(getIntent().getLongExtra("ownListId",0));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
@@ -66,7 +66,7 @@ public class DetailedListActivity extends AppCompatActivity
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                //delete
+                dbContext.
                 return true;
             }
 

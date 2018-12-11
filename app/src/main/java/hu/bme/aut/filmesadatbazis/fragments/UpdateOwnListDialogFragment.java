@@ -11,11 +11,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import hu.bme.aut.filmesadatbazis.R;
-import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 
 public class UpdateOwnListDialogFragment extends DialogFragment {

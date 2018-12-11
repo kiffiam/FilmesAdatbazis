@@ -55,4 +55,8 @@ public class DbContext {
     public List<Movie> getMoviesForList(final long ownListId){
         return database.listMovieJoinDao().getMoviesForList(ownListId);
     }
+
+    public void deleteMovieFromList(ListMovieJoin listMovieJoin){
+        database.listMovieJoinDao().deleteItem(listMovieJoin);
+    }
 }

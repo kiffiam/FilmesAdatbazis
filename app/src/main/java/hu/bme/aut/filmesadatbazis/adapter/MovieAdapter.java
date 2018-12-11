@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +34,9 @@ import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
 
-    private final List<Movie> movies;
+    public final List<Movie> movies;
 
-    private final List<OwnList> ownLists;
+    public List<OwnList> ownLists;
 
     private MovieClickListener listener;
 
@@ -62,7 +63,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onDataClicked(item); }
+                listener.onDataClicked(item);
+            }
         });
         holder.item = item;
     }
@@ -122,6 +124,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         TextView genreTextView;
         ImageButton addToListButton;
         ImageButton removeButton;
+        PopupMenu popupMenu;
         Movie item;
 
 
@@ -141,35 +144,39 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 }
             });
 
-            /*addToListButton.setOnClickListener(new View.OnClickListener() {
-
+            addToListButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Creating the instance of PopupMenu
-                    PopupMenu popup = new PopupMenu(addToListButton);
 
-                    for (OwnList list: ownLists) {
-                        popup.getMenu().add(list.name);
-                    }
+                    popupMenu = new PopupMenu(v.getContext(), v);
+                    createMenu(popupMenu.getMenu(), getLayoutPosition());
 
-                    //Inflating the Popup using xml file
-                    popup.getMenuInflater().inflate(R.menu.menu_movie_item_add_to_list, popup.getMenu());
-
-                    //registering popup with OnMenuItemClickListener
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            addItemToList(getLayoutPosition(),ownLists.get(item.getItemId()));
-                            return true;
+                    popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            popupMenu = null;
                         }
                     });
+                    popupMenu.show();
                 }
-            });*/
+            });
         }
     }
 
-    private void addItemToList(int layoutPosition, OwnList ownList) {
-        Movie movieToAdd = movies.get(layoutPosition);
+    public void createMenu(Menu menu, final int position) {
+        for (final OwnList current : ownLists) {
+            menu.add(current.name).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    addItemToList(position, current);
+                    return true;
+                }
+            });
+        }
+    }
 
+    private void addItemToList(int position, OwnList ownList) {
+        Movie movieToAdd = movies.get(position);
         listener.onMovieInsertToList(movieToAdd, ownList);
     }
 
@@ -177,6 +184,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         movies.clear();
         movies.addAll(movieList);
         notifyDataSetChanged();
+    }
+
+    public void updateLists(List<OwnList> ownListList) {
+        ownLists.clear();
+        ownLists.addAll(ownListList);
     }
 
     public void deleteItem(int position) {
