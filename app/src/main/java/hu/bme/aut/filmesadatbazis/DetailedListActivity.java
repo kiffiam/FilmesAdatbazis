@@ -11,6 +11,7 @@ import java.util.List;
 
 import hu.bme.aut.filmesadatbazis.adapter.MovieAdapter;
 import hu.bme.aut.filmesadatbazis.data.DbContext;
+import hu.bme.aut.filmesadatbazis.data.ListMovieJoin;
 import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 import hu.bme.aut.filmesadatbazis.fragments.UpdateMovieDialogFragment;
@@ -36,19 +37,16 @@ public class DetailedListActivity extends AppCompatActivity
     private void initRecyclerView(){
         recyclerView = findViewById(R.id.AllMovieRecyclerView);
         adapter = new MovieAdapter(this);
-        //loadItemsInBackground(ownList);
         loadItemsInBackground(getIntent().getLongExtra("ownListId",0));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
-    //TODO:ne az összes filmet jelenítsók meg csak amiket kell
     private void loadItemsInBackground(final long id){
         new AsyncTask<Void, Void, List<Movie>>(){
 
             @Override
             protected List<Movie> doInBackground(Void... voids){
-                //return dbContext.getMoviesForList(ownList.id);
                 return dbContext.getMoviesForList(id);
             }
 
@@ -59,14 +57,14 @@ public class DetailedListActivity extends AppCompatActivity
         }.execute();
     }
 
-    //TODO:Csak a listáról tölrődjenek, tehát a joinból
+
     @Override
     public void onItemDeleted(final Movie movie) {
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                dbContext.
+                dbContext.deleteMovieFromList(new ListMovieJoin(movie.id, getIntent().getLongExtra("ownListId",0)));
                 return true;
             }
 

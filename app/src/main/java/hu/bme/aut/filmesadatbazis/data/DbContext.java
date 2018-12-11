@@ -24,6 +24,10 @@ public class DbContext {
     }
 
     public void deleteMovie(Movie movie) {
+        List<OwnList> listContainMovie = database.listMovieJoinDao().getOwnListForMovie(movie.id);
+        for (OwnList current : listContainMovie) {
+            deleteMovieFromList(new ListMovieJoin(movie.id, current.id));
+        }
         database.movieDao().deleteItem(movie);
     }
 
@@ -40,23 +44,28 @@ public class DbContext {
     }
 
     public void deleteOwnList(OwnList ownList) {
+        List<Movie> moviesInList = database.listMovieJoinDao().getMoviesForList(ownList.id);
+        for (Movie current : moviesInList) {
+            deleteMovieFromList(new ListMovieJoin(current.id,ownList.id));
+        }
         database.ownListDao().delete(ownList);
     }
 
-    public void updateOwnList(OwnList ownList) { database.ownListDao().update(ownList);
+    public void updateOwnList(OwnList ownList) {
+        database.ownListDao().update(ownList);
     }
 
 
     //listMovieJoinDao.insert(new ListMovieJoin(movieId, ownListId);
-    public void insertListMovieJoin(ListMovieJoin listMovieJoin){
+    public void insertListMovieJoin(ListMovieJoin listMovieJoin) {
         database.listMovieJoinDao().insert(listMovieJoin);
     }
 
-    public List<Movie> getMoviesForList(final long ownListId){
+    public List<Movie> getMoviesForList(final long ownListId) {
         return database.listMovieJoinDao().getMoviesForList(ownListId);
     }
 
-    public void deleteMovieFromList(ListMovieJoin listMovieJoin){
+    public void deleteMovieFromList(ListMovieJoin listMovieJoin) {
         database.listMovieJoinDao().deleteItem(listMovieJoin);
     }
 }
