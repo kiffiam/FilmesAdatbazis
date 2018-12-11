@@ -13,11 +13,11 @@ import hu.bme.aut.filmesadatbazis.data.DbContext;
 import hu.bme.aut.filmesadatbazis.data.Movie;
 import hu.bme.aut.filmesadatbazis.data.OwnList;
 import hu.bme.aut.filmesadatbazis.fragments.CreateMovieDialogFragment;
-import hu.bme.aut.filmesadatbazis.fragments.NewOwnListDialogFragment;
+import hu.bme.aut.filmesadatbazis.fragments.CreateOwnListDialogFragment;
 
 public class MainActivity extends AppCompatActivity
         implements CreateMovieDialogFragment.NewMovieDialogListener,
-        NewOwnListDialogFragment.NewOwnListDialogListener{
+        CreateOwnListDialogFragment.NewOwnListDialogListener{
 
     private DbContext dbContext;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         btnNewOwnListDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new NewOwnListDialogFragment().show(getSupportFragmentManager(), NewOwnListDialogFragment.TAG);
+                new CreateOwnListDialogFragment().show(getSupportFragmentManager(), CreateOwnListDialogFragment.TAG);
             }
         });
 
